@@ -1,31 +1,26 @@
 import 'package:angular/angular.dart';
-import 'package:angular_app/src/hero.dart';
-import 'package:angular_app/src/hero_component.dart';
-import 'package:angular_app/src/hero_service.dart';
-import 'package:angular_app/src/mock_heroes.dart';
+import 'package:angular_router/angular_router.dart';
+
+import 'src/hero_service.dart';
+import 'src/routes.dart';
 
 @Component(
   selector: 'my-app',
-  templateUrl: 'app_component.html',
+  template: '''
+    <h1>{{title}}</h1>
+    <nav>
+      <a [routerLink]="RoutePaths.dashboard.toUrl()"
+        [routerLinkActive]="'active'">Dashboard</a>
+      <a [routerLink]="RoutePaths.heroes.toUrl()"
+        [routerLinkActive]="'active'">Heroes</a>
+    </nav>
+    <router-outlet [routes]="Routes.all"></router-outlet>
+  ''',
   styleUrls: ['app_component.css'],
-  directives: [coreDirectives, HeroComponent],
+  directives: [routerDirectives],
   providers: [ClassProvider(HeroService)],
+  exports: [RoutePaths, Routes],
 )
-class AppComponent implements OnInit {
-  AppComponent(this._heroService);
-  final HeroService _heroService;
+class AppComponent {
   final title = 'Tour of Heroes';
-  List<Hero> heroes;
-  Hero selected;
-
-  void ngOnInit() => _getHeroes();
-
-  void _getHeroes() {
-    _heroService.getAll().then((heroes) => this.heroes = heroes);
-  }
-
-  void onSelect(Hero hero) {
-    selected = hero;
-    print("hero selected ${selected.name}");
-  }
 }
