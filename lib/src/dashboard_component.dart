@@ -1,17 +1,16 @@
 import 'package:angular/angular.dart';
-import 'package:angular_app/src/hero.dart';
-import 'package:angular_app/src/hero_service.dart';
-import 'package:angular_app/src/route_paths.dart';
 import 'package:angular_router/angular_router.dart';
+
+import 'hero.dart';
+import 'hero_service.dart';
+import 'hero_search_component.dart';
+import 'route_paths.dart';
 
 @Component(
   selector: 'my-dashboard',
   templateUrl: 'dashboard_component.html',
   styleUrls: ['dashboard_component.css'],
-  directives: [
-    coreDirectives,
-    routerDirectives,
-  ],
+  directives: [coreDirectives, HeroSearchComponent, routerDirectives],
 )
 class DashboardComponent implements OnInit {
   List<Hero> heroes;
